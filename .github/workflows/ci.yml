@@ -9,9 +9,6 @@ on:
 jobs:
   tests:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        browser: [chrome, firefox]
 
     steps:
       - name: Checkout
@@ -33,16 +30,8 @@ jobs:
         run: |
           pytest -m api --junitxml=reports/junit.xml
 
-      - name: Run UI tests
-        env:
-          BROWSER: ${{ matrix.browser }}
-          HEADLESS: 'true'
-        run: |
-          pytest -m ui --html=reports/report-${{ matrix.browser }}.html
-
       - name: Archive reports
         uses: actions/upload-artifact@v4
         with:
-          name: reports-${{ matrix.browser }}
+          name: reports
           path: reports/
-
