@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>CT Form Demo</title>
+  </head>
+  <body>
+    <h1 data-testid="headline">Form Demo App</h1>
+    <form id="demo-form" data-testid="demo-form">
+      <label for="name">Name</label>
+      <input id="name" data-testid="name" name="name" type="text" />
+
+      <label for="email">Email</label>
+      <input id="email" data-testid="email" name="email" type="email" />
+
+      <label for="role">Role</label>
+      <select id="role" data-testid="role" name="role">
+        <option value="qa">QA</option>
+        <option value="dev">DEV</option>
+      </select>
+
+      <label for="terms">Accept terms</label>
+      <input id="terms" data-testid="terms" name="terms" type="checkbox" />
+
+      <button data-testid="submit" type="submit">Submit</button>
+    </form>
+    <p data-testid="result" id="result"></p>
+
+    <script>
+      const form = document.getElementById("demo-form");
+      const result = document.getElementById("result");
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const role = document.getElementById("role").value;
+        const terms = document.getElementById("terms").checked;
+        result.textContent = `Saved: ${name} | ${email} | ${role} | terms=${terms}`;
+      });
+    </script>
+  </body>
+</html>
+

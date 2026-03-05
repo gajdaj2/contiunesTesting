@@ -4,3 +4,5 @@ pytest-html==4.1.1
 requests==2.32.3
 selenium==4.23.1
 flask==3.0.3
+testcontainers==4.8.2
+psycopg2-binary==2.9.9

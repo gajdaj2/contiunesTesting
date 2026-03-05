@@ -48,6 +48,50 @@ Aby pominac testy oznaczone markerem `serial`:
 pytest -n auto -m "not serial"
 ```
 
+## Testcontainers (Postgres)
+Test przykladowy znajduje sie w `tests/containers/test_postgres_container.py` i wymaga dzialajacego Dockera.
+```bash
+pytest -m containers
+```
+
+## Testcontainers (WireMock)
+Przyklad testu z WireMock jest w `tests/containers/test_wiremock_container.py`.
+```bash
+pytest -m containers -k wiremock
+```
+Przyklad uruchomienia jako skrypt:
+```bash
+python containers/example_2.py
+```
+
+## Testcontainers (Nginx + Selenium)
+Przyklad uruchamia kontener Nginx z prosta strona HTML i testuje ja w Selenium: `tests/containers/test_nginx_selenium.py`.
+```bash
+pytest -m containers -k nginx
+```
+Aby zobaczyc okno przegladarki ustaw `HEADLESS=false`:
+```bash
+HEADLESS=false pytest -m containers -k nginx
+```
+Przyklad uruchomienia jako skrypt:
+```bash
+HEADLESS=false python containers/example_3.py
+```
+
+## Example 5 (Nginx + formularz + Selenium)
+Przyklad formularza serwowanego przez Nginx i testu Selenium: `tests/containers/test_example_5_nginx_form.py`.
+```bash
+pytest -m containers -k example_5
+```
+Aby zobaczyc okno przegladarki ustaw `HEADLESS=false`:
+```bash
+HEADLESS=false pytest -m containers -k example_5
+```
+Przyklad uruchomienia jako skrypt:
+```bash
+HEADLESS=false python containers/example_5.py
+```
+
 ## Struktura
 ```
 src/
