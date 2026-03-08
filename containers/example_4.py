@@ -10,7 +10,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from testcontainers.core.container import DockerContainer
 
 sys.path.append(str(Path(__file__).resolve().parents[1] / "src"))
-from utils.driver_factory import create_driver
+from src.utils.driver_factory import create_driver
 
 
 
