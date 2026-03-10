@@ -1,3 +1,5 @@
+import logging
+
 import pytest
 from playwright.sync_api import sync_playwright, expect
 
@@ -10,6 +12,18 @@ def page():
         page = browser.new_page()
         yield page
         browser.close()
+
+
+
+from reportportal_client import RPLogger
+
+
+@pytest.fixture(scope="session")
+def rp_logger():
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.DEBUG)
+    logging.setLoggerClass(RPLogger)
+    return logger
 
 @pytest.fixture
 def browser_context():

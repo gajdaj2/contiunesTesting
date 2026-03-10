@@ -5,6 +5,8 @@ from playwright.sync_api import sync_playwright
 from e2e.pom.pages.inputs_page import InputsPage
 from e2e.pom.pages.main_page import MainPage
 
+import logging
+import sys
 
 @pytest.fixture
 def browser_page():
@@ -17,7 +19,9 @@ def browser_page():
     playwright.stop()
 
 
-def test_inputs_page(browser_page):
+
+
+def test_inputs_page(browser_page,rp_logger):
     """Test: nawigacja do inputs i wpisanie tekstu"""
     # Inicjalizacja POM
 
