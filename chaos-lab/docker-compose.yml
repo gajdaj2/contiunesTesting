@@ -1,0 +1,104 @@
+version: '3.8'
+
+services:
+  # ===== APLIKACJA =====
+  app:
+    build: ./app
+    container_name: chaos-app
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgres://user:password@postgres:5432/testdb
+      REDIS_URL: redis://redis:6379
+      RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672
+      LOG_LEVEL: debug
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "healthcheck.js"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+    networks:
+      - chaos-network
+    volumes:
+      - ./app:/app
+      - /app/node_modules
+
+  # ===== BAZA DANYCH =====
+  postgres:
+    image: postgres:15-alpine
+    container_name: chaos-postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: testdb
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - chaos-network
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+
+  # ===== CACHE =====
+  redis:
+    image: redis:7-alpine
+    container_name: chaos-redis
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - chaos-network
+    ports:
+      - "6379:6379"
+
+  # ===== MESSAGE QUEUE =====
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: chaos-rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - chaos-network
+    ports:
+      - "5672:5672"
+      - "15672:15672"  # Management UI
+
+  # ===== MONITORING =====
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: chaos-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - chaos-network
+
+networks:
+  chaos-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
