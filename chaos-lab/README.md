@@ -114,6 +114,8 @@ chmod +x scripts/*.sh
 
 ```bash
 docker-compose up -d
+lub 
+docker compose up -d --build app
 ```
 
 ### 4. Sprawdzenie statusu

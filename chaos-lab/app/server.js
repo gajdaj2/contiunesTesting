@@ -72,9 +72,29 @@ async function initializeServices() {
       url: process.env.REDIS_URL,
       socket: { reconnectStrategy: () => 100 }
     });
-    await redisClient.connect();
-    console.log('✅ Redis: Połączono');
-    serviceStatus.set({ service: 'redis' }, 1);
+
+    redisClient.on('ready', () => {
+      serviceStatus.set({ service: 'redis' }, 1);
+    });
+
+    redisClient.on('end', () => {
+      serviceStatus.set({ service: 'redis' }, 0);
+    });
+
+    redisClient.on('error', (err) => {
+      console.error('❌ Redis:', err.message);
+      serviceStatus.set({ service: 'redis' }, 0);
+    });
+
+    redisClient.connect()
+      .then(() => {
+        console.log('✅ Redis: Połączono');
+        serviceStatus.set({ service: 'redis' }, 1);
+      })
+      .catch((err) => {
+        console.error('❌ Redis:', err.message);
+        serviceStatus.set({ service: 'redis' }, 0);
+      });
   } catch (err) {
     console.error('❌ Redis:', err.message);
     serviceStatus.set({ service: 'redis' }, 0);
@@ -82,10 +102,17 @@ async function initializeServices() {
 
   // RabbitMQ
   try {
-    const connection = await amqp.connect(process.env.RABBITMQ_URL);
-    rabbitmqChannel = await connection.createChannel();
-    console.log('✅ RabbitMQ: Połączono');
-    serviceStatus.set({ service: 'rabbitmq' }, 1);
+    amqp.connect(process.env.RABBITMQ_URL)
+      .then((connection) => connection.createChannel())
+      .then((channel) => {
+        rabbitmqChannel = channel;
+        console.log('✅ RabbitMQ: Połączono');
+        serviceStatus.set({ service: 'rabbitmq' }, 1);
+      })
+      .catch((err) => {
+        console.error('❌ RabbitMQ:', err.message);
+        serviceStatus.set({ service: 'rabbitmq' }, 0);
+      });
   } catch (err) {
     console.error('❌ RabbitMQ:', err.message);
     serviceStatus.set({ service: 'rabbitmq' }, 0);

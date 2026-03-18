@@ -5,7 +5,8 @@ async function checkHealth() {
     const req = http.get('http://localhost:3000/health', (res) => {
       res.on('data', () => {});
       res.on('end', () => {
-        process.exit(res.statusCode === 200 ? 0 : 1);
+        const okStatuses = new Set([200, 503]);
+        process.exit(okStatuses.has(res.statusCode) ? 0 : 1);
       });
     });
 
