@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "💣 CHAOS: Wyłączanie Redis..."
-docker-compose stop redis
+docker compose stop redis
 
 echo "⏸️  Redis jest wyłączony"
 echo "🔍 Obserwuj odpowiedź aplikacji:"
@@ -14,6 +14,6 @@ echo "Naciśnij Enter, aby włączyć Redis..."
 read
 
 echo "🔄 Włączanie Redis..."
-docker-compose start redis
+docker compose start redis
 
 echo "✅ Redis włączony"

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "💣 CHAOS: Wyłączanie RabbitMQ..."
-docker-compose stop rabbitmq
+docker compose stop rabbitmq
 
 echo "⏸️  RabbitMQ jest wyłączony"
 echo "🔍 Obserwuj odpowiedź aplikacji:"
@@ -13,6 +13,6 @@ echo "Naciśnij Enter, aby włączyć RabbitMQ..."
 read
 
 echo "🔄 Włączanie RabbitMQ..."
-docker-compose start rabbitmq
+docker compose start rabbitmq
 
 echo "✅ RabbitMQ włączony"

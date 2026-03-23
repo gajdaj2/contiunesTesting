@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "💣 CHAOS: Wyłączanie PostgreSQL..."
-docker-compose pause postgres
+docker compose pause postgres
 
 echo "⏸️  PostgreSQL jest wstrzymany"
 echo "🔍 Obserwuj odpowiedź aplikacji:"
@@ -14,6 +14,6 @@ echo "Naciśnij Enter, aby wznowić PostgreSQL..."
 read
 
 echo "🔄 Wznowienie PostgreSQL..."
-docker-compose unpause postgres
+docker compose unpause postgres
 
 echo "✅ PostgreSQL wznowiony"

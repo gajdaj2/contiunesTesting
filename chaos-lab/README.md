@@ -55,6 +55,23 @@ Laboratorium do nauki **Chaos Engineering** na przykładzie aplikacji Node.js z 
 - **curl** (do testowania API)
 - **jq** (opcjonalnie, do parsowania JSON)
 
+### Instalacja jq na Linux
+
+```bash
+# Debian/Ubuntu
+sudo apt update
+sudo apt install -y jq
+
+# Fedora
+sudo dnf install -y jq
+
+# CentOS/RHEL
+sudo yum install -y jq
+
+# Arch/Manjaro
+sudo pacman -S jq
+```
+
 ### Sprawdzenie wersji
 
 ```bash
