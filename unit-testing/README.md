@@ -141,31 +141,7 @@ def test_various_discounts(price, discount, expected):
     assert calculate_discount(price, discount) == expected
 ```
 
-### Mocking i Patching
 
-**Mock** to obiekt zastępczy, który symuluje rzeczywisty obiekt.
-
-```python
-from unittest.mock import Mock, patch
-
-def test_with_mock(mocker):
-    # Mock funkcji logowania
-    mock_logger = mocker.patch('app.logger')
-    
-    # Uruchom funkcję
-    calculate_discount(100, 20)
-    
-    # Sprawdź, czy logger był wywołany
-    assert mock_logger.called
-    assert mock_logger.call_count == 1
-```
-
-**Kiedy używać?**
-- Bazy danych
-- API externe
-- Logowanie
-- Systemy plików
-- Zegar (czas)
 
 ### Code Coverage
 
