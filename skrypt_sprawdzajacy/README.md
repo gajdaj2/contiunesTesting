@@ -5,13 +5,13 @@ Prosty skrypt do sprawdzenia: Docker, Docker Compose, Python, Java, uzycie dysku
 ## Uruchomienie
 
 ```bash
-python3 /Users/apple/projekty/advanced_rag/.claude/run_check.py
+python3 run_check.py
 ```
 
 JSON:
 
 ```bash
-python3 /Users/apple/projekty/advanced_rag/.claude/run_check.py --json
+python3 run_check.py --json
 ```
 
 ## Uwagi

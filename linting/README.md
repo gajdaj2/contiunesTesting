@@ -53,9 +53,6 @@ Kurs poświęcony zautomatyzowanej analizie jakości kodu Python i formatowaniu.
 ---
 
 ## Wstęp
-
-Kod to nie tylko *funkcjonalność* — to również *czytelność*, *konsystencja* i *jakość*.
-
 Dwa narzędzia pomagają w automatyzacji pracy nad kodem:
 
 - **Pylint** — wykrywa błędy, ostrzeżenia i problemy jakościowe (code smell, nieużywane zmienne, złe nazwy)
